@@ -1,9 +1,6 @@
-var express = require('express');
-var router = express.Router();
+let cartRouter = require('../routes/cart');
+let listingRouter = require('../routes/listing');
+let orderRouter = require('../routes/order');
+let userRouter = require('../routes/user');
 
-/* GET home page. */
-router.get('/', function (req, res) {
-    res.json('API Available');
-});
-
-module.exports = router;
+module.exports = { cartRouter, listingRouter, userRouter, orderRouter };
