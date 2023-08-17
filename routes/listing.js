@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 // GET request for Index
-router.get('/', () => {
-    //Controller to display index page
+router.get('/', (req, res) => {
+    res.send('API available')
 });
 
 //GET request for categories

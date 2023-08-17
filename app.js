@@ -3,7 +3,6 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 
-let indexRouter = require('./routes/index');
 let apiRouter = require('./routes/index');
 
 let app = express();
@@ -13,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //API Routes
-app.use('/', indexRouter);
 app.use('/v1', apiRouter.listingRouter);
 app.use('/v1', apiRouter.userRouter);
 app.use('/v1', apiRouter.orderRouter);
