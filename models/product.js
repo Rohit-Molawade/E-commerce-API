@@ -7,7 +7,7 @@ const productschema = new Schema({
     price: { type: Number, required: true, min: 1 },
     quantity: { type: Number, required: true, min: 0},
     availability: { type: Boolean, required: true },
-    category: { type: Schema.Types.ObjectId, required: true, refs: 'Category' },
+    category: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
     brand: { type: String, required: true },
     releaseDate: { type: Date, default: Date.now() },
 });
