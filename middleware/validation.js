@@ -25,7 +25,7 @@ exports.register_validation = [
         .isStrongPassword()
         .withMessage('Password not strong')
         .escape(),
-    (req, res) => {
+    (req, res, next) => {
         const error_list = validationResult(req);
         if (!error_list.isEmpty()) {
             res.status(401).json(error_list);
