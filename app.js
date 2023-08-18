@@ -12,6 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//Auth middleware
+require('./services/passport.js');
+
 //Connect to MongoDB
 mongoose.main();
 

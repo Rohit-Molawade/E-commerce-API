@@ -11,7 +11,7 @@ exports.register_validation = [
     body('email')
         .trim()
         .notEmpty()
-        .withMessage('Email filed is empty')
+        .withMessage('Email fieled is empty')
         .toLowerCase()
         .isEmail()
         .withMessage('Email format error')
@@ -31,6 +31,31 @@ exports.register_validation = [
             res.status(401).json(error_list);
             return;
         }
+        next();
+    },
+];
+
+exports.login_validation = [
+    body('email')
+        .trim()
+        .notEmpty()
+        .withMessage('Email Field Empty')
+        .toLowerCase()
+        .isEmail()
+        .withMessage('Email format error')
+        .escape(),
+    body('password')
+        .trim()
+        .notEmpty()
+        .withMessage('Password Field Empty')
+        .escape(),
+    (req, res, next) => {
+        const error_list = validationResult(req);
+        if (!error_list.isEmpty()) {
+            res.status(401).json(error_list);
+            return;
+        }
+        console.log('validated');
         next();
     },
 ];
