@@ -7,9 +7,7 @@ const authentication = require('../middleware/authentication');
 router.get('/', authentication.authenticate_jwt, Controller.cart_get);
 
 //POST request to add product in cart
-router.post('/', () => {
-    //Contoller to add product in cart
-});
+router.post('/', authentication.authenticate_jwt, Controller.cart_add);
 
 //PUT request to update product quantities in cart
 router.put('/', () => {
