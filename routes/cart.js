@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const Controller = require('../controllers/cart');
+const authentication = require('../middleware/authentication');
 
 //GET request for cart
-router.get('/', () => {
-    //Controller to displaty Users cart
-});
+router.get('/', authentication.authenticate_jwt, Controller.cart_get);
 
 //POST request to add product in cart
-router.post('/:product_id', () => {
+router.post('/', () => {
     //Contoller to add product in cart
 });
 
 //PUT request to update product quantities in cart
-router.put('/:product_id', () => {
+router.put('/', () => {
     //Contoller to update product quantities in cart
 });
 
