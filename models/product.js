@@ -8,7 +8,7 @@ const productschema = new Schema({
     quantity: { type: Number, required: true, min: 0},
     availability: { type: Boolean, required: true },
     category: { type: Schema.Types.ObjectId, required: true, refs: 'Category' },
-    Brand: { type: String, required: true },
+    brand: { type: String, required: true },
     releaseDate: { type: Date, default: Date.now() },
 });
 
