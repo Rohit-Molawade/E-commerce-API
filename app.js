@@ -3,6 +3,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 
+let mongoose = require('./services/dbconnect');
 let apiRouter = require('./routes/index');
 
 let app = express();
@@ -10,6 +11,9 @@ let app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//Connect to MongoDB
+mongoose.main();
 
 //API Routes
 app.use('/v1', apiRouter.listingRouter);
