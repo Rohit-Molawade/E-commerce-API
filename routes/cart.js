@@ -15,8 +15,10 @@ router.put('/', () => {
 });
 
 //DELETE request to delete product from cart
-router.delete('/:product_id', () => {
-    //Contoller to delete product from cart
-});
+router.delete(
+    '/:product_id',
+    authentication.authenticate_jwt,
+    Controller.cart_remove
+);
 
 module.exports = router;
