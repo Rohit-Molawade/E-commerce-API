@@ -7,7 +7,7 @@ exports.add_product = async (product_details, user_id) => {
             await Product.findById(product_details.id),
             await Cart.findOne({ owner: user_id })
                 .populate('owner', 'name')
-                .populate('product'),
+                .populate('product.productId', 'name price quantity brand'),
         ]);
 
         //Throw error if product not found
@@ -76,7 +76,7 @@ exports.get_cart = async (user_id) => {
     try {
         const cart = await Cart.findOne({ owner: user_id })
             .populate('owner', 'name')
-            .populate('product');
+            .populate('product.productId', 'name price quantity brand');
 
         //Cart not found
         if (cart === null) {
@@ -104,7 +104,7 @@ exports.remove_product = async (product_id, user_id) => {
             await Product.findById(product_id),
             await Cart.findOne({ owner: user_id })
                 .populate('owner', 'name')
-                .populate('product'),
+                .populate('product.productId', 'name price quantity brand'),
         ]);
 
         //Throw error if cart not exists
@@ -159,7 +159,7 @@ exports.update_product = async (product_details, user_id) => {
         await Product.findById(product_details.id),
         await Cart.findOne({ owner: user_id })
             .populate('owner', 'name')
-            .populate('product'),
+            .populate('product.productId', 'name price quantity brand'),
     ]);
 
     if (product_details.quantity <= 0) {
