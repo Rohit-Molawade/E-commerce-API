@@ -10,9 +10,7 @@ router.get('/', authentication.authenticate_jwt, Controller.cart_get);
 router.post('/', authentication.authenticate_jwt, Controller.cart_add);
 
 //PUT request to update product quantities in cart
-router.put('/', () => {
-    //Contoller to update product quantities in cart
-});
+router.put('/', authentication.authenticate_jwt, Controller.cart_update);
 
 //DELETE request to delete product from cart
 router.delete(

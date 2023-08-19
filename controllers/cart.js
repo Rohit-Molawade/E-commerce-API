@@ -52,3 +52,28 @@ exports.cart_remove = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.cart_update = async (req, res, next) => {
+    try {
+        const product_details = {
+            id: req.body.product_id,
+            quantity: req.body.quantity,
+        };
+
+        const user_id = req.user._id;
+
+        const message = await cartService.update_product(
+            product_details,
+            user_id
+        );
+
+        if (message.name === 'Error') {
+            res.status(400).json({ message: message.message });
+            return;
+        }
+
+        res.status(200).json({ message: message });
+    } catch (error) {
+        next(error);
+    }
+};

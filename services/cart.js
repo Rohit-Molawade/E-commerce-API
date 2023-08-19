@@ -146,8 +146,72 @@ exports.remove_product = async (product_id, user_id) => {
 
         await product.save();
 
-        return 'Product removed from cart'
+        return 'Product removed from cart';
     } catch (error) {
         return error;
     }
+};
+
+exports.update_product = async (product_details, user_id) => {
+    let productFlag = false;
+    let offset = 0;
+    const [product, cart] = await Promise.all([
+        await Product.findById(product_details.id),
+        await Cart.findOne({ owner: user_id })
+            .populate('owner', 'name')
+            .populate('product'),
+    ]);
+
+    if (product_details.quantity <= 0) {
+        throw new Error('Invalid quantity');
+    }
+
+    //Throw error if cart not exists
+    if (cart === null) {
+        throw new Error('Cart does not exists');
+    }
+
+    //Throw error if product not found
+    if (product === null) {
+        throw new Error('Product Not Found');
+    }
+
+    cart.product.map((prod) => {
+        if (prod.productId.toString() === product_details.id) {
+            productFlag = true;
+            offset = product_details.quantity - prod.quantity;
+        }
+    });
+
+    if (productFlag === false) {
+        throw new Error('Product not in cart');
+    }
+
+    //Throw error if user adds more items then available
+    if (product.quantity - offset < 0) {
+        throw new Error('Product quantity exceeded');
+    }
+
+    //Calculate total price
+    const totalPrice = cart.totalPrice + product.price * offset;
+
+    await Cart.findOneAndUpdate(
+        { owner: user_id, 'product.productId': product_details.id },
+        {
+            $set: {
+                'product.$.quantity': product_details.quantity,
+            },
+            totalPrice: totalPrice,
+        }
+    );
+
+    //Update product availability and quantity
+    product.quantity = product.quantity - offset;
+    if (product.quantity > 0) {
+        product.availability = true;
+    }
+
+    await product.save();
+
+    return 'Product quantity updated';
 };
