@@ -18,7 +18,7 @@ exports.add_product = async (product_details, user_id) => {
         //Throw error if product already exists
         if (cart !== null) {
             cart.product.map((prod) => {
-                if (prod.productId.toString() === product_details.id) {
+                if (prod.productId._id.toString() === product_details.id) {
                     throw new Error('Product already Added to the cart');
                 }
             });
@@ -113,7 +113,7 @@ exports.remove_product = async (product_id, user_id) => {
         }
 
         cart.product.map((prod) => {
-            if (prod.productId.toString() === product_id) {
+            if (prod.productId._id.toString() === product_id) {
                 quantity = prod.quantity;
             }
         });
@@ -177,7 +177,7 @@ exports.update_product = async (product_details, user_id) => {
     }
 
     cart.product.map((prod) => {
-        if (prod.productId.toString() === product_details.id) {
+        if (prod.productId._id.toString() === product_details.id) {
             productFlag = true;
             offset = product_details.quantity - prod.quantity;
         }
