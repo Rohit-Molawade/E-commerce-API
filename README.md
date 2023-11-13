@@ -1,5 +1,5 @@
 # E-commerce-API
-Ecommerce API with Node js for triveous
+Ecommerce API with Node js
 
 ## Installation
 
